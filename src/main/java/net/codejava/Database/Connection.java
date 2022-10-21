@@ -15,7 +15,7 @@ public class Connection {
 
     public boolean connect() {
         try {
-            mongoClient = MongoClients.create("localhost:27017");
+            mongoClient = MongoClients.create();
             db = mongoClient.getDatabase("UserDatabase");
             db.createCollection("user");
             collection = db.getCollection("user");
@@ -27,6 +27,7 @@ public class Connection {
         }
     }
 
+    //Filip
     public void addRecord(Document document) {
         collection.insertOne(document);
     }
