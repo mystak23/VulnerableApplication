@@ -21,10 +21,9 @@ public class LoginController {
 
     @PostMapping("/login")
     public String submitLoginForm(@ModelAttribute("user") User user) {
-        System.out.println(user);
        try {
            if (UserDatabase.validateUser(user.getName(), user.getPassword())) {
-               return "login_unsuccess";
+               return "login_success";
            } else {
                if (UserDatabase.isInjected()) {
                    return "login_injected";
