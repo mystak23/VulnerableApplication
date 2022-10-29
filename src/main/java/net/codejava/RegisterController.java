@@ -26,8 +26,11 @@ public class RegisterController {
 	public String submitRegisterForm(@ModelAttribute("user") User user) {
 		username = user.getName();
 		password = user.getPassword();
-		UserDatabase.addUser(username, password);
-		System.out.println(user);
+		try {
+			UserDatabase.addUser(username, password);
+		} catch (Exception e) {
+			e.getMessage();
+		}
 		return "register_success";
 	}
 }

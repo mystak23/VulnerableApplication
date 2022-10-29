@@ -1,5 +1,6 @@
 package net.codejava;
 
+import net.codejava.Database.Connection;
 import net.codejava.Database.User;
 import net.codejava.Database.UserDatabase;
 import org.springframework.stereotype.Controller;
@@ -12,24 +13,29 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class LoginController {
 
     @GetMapping("/login")
-    public String showRegisterForm(Model model) {
+    public String showLoginForm(Model model) {
         User user = new User();
         model.addAttribute("user", user);
         return "login_form";
     }
 
     @PostMapping("/login")
-    public String submitRegisterForm(@ModelAttribute("user") User user) {
+    public String submitLoginForm(@ModelAttribute("user") User user) {
         System.out.println(user);
-        if (UserDatabase.validateUser(user.getName(), user.getPassword())) {
-            return "login_unsuccess";
-        } else {
-            if (UserDatabase.isInjected()) {
-                return "login_injected";
-            } else {
-                return "login_unsuccess";
-            }
-        }
+       try {
+           if (UserDatabase.validateUser(user.getName(), user.getPassword())) {
+               return "login_unsuccess";
+           } else {
+               if (UserDatabase.isInjected()) {
+                   return "login_injected";
+               } else {
+                   return "login_unsuccess";
+               }
+           }
+       } catch (Exception e) {
+           e.getMessage();
+           return "";
+       }
     }
 
 }
