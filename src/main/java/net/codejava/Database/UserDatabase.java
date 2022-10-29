@@ -1,20 +1,14 @@
 package net.codejava.Database;
-import com.mongodb.BasicDBObject;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.model.Filters;
-import org.bson.Document;
-import org.bson.conversions.Bson;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
-import static javax.management.Query.and;
-import static javax.management.Query.eq;
+import java.util.logging.Logger;
 
 
 public class UserDatabase {
+
+    private static final Logger logger = Logger.getLogger(String.valueOf(UserDatabase.class));
 
     public static void addUser(String username, String password) throws IOException, InterruptedException {
         try {
@@ -23,6 +17,7 @@ public class UserDatabase {
             Files.writeString(Path.of("insert.js"), insertCommand);
             String command = "mongosh --host 127.0.0.1 --port 27017 --file insert.js"; //dodelat script
             Connection.executeCommand(command, false);
+            logger.info("User " + username + " added.");
         } catch (Exception e) {
             e.getMessage();
         } finally {
@@ -42,10 +37,11 @@ public class UserDatabase {
             Files.writeString(Path.of("find.js"), findCommand);
             String command = "mongosh --host 127.0.0.1 --port 27017 --file find.js";
             String savedPassword = Connection.executeCommand(command, true);
-            System.out.println("Saved: " + savedPassword);
             if (("$$" + enteredPassword).equals(savedPassword)) {
+                logger.info("Login of " + username + " successful. Password: " + enteredPassword);
                 return true;
             } else {
+                logger.info("Login of " + username + " unsuccesful.");
                 return false;
             }
         } catch (Exception e) {
@@ -56,8 +52,11 @@ public class UserDatabase {
         }
     }
 
-    //dodělá Filip
     public static boolean isInjected() {
+
+        //nastuduj a připrav si příkaz, kterým v té appce exploituješ aplikaci (jakkoliv)
+        //tady ten příkaz napiš a jakože pokud se rovnají, tak to vrátí true a tím pádem to napíše "injected"
+
         return false;
     }
 
