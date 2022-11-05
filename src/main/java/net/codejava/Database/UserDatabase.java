@@ -52,7 +52,7 @@ public class UserDatabase {
         }
     }
 
-    public static boolean isInjected() {
+    public static boolean isInjected(String username, String password) {
 
         //Boolean Injection
         ArrayList<String> commands = new ArrayList<>();
