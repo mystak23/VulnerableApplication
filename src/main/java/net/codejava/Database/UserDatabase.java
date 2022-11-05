@@ -54,10 +54,22 @@ public class UserDatabase {
 
     public static boolean isInjected() {
 
-        //nastuduj a připrav si příkaz, kterým v té appce exploituješ aplikaci (jakkoliv)
-        //tady ten příkaz napiš a jakože pokud se rovnají, tak to vrátí true a tím pádem to napíše "injected"
+        //Boolean Injection
+        ArrayList<String> commands = new ArrayList<>();
+        String AtGtInjectionCommand = "{'$gt': ''}"; commands.add(AtGtInjectionCommand);
+        String DlrGtInjectionCommand = "{'$gt': ''}"; commands.add(DlrGtInjectionCommand);
+        String AtNeInjectionCommand = "{\"&ne\": \"\"}"; commands.add(AtNeInjectionCommand);
+        String DlrNeInjectionCommand = "{\"$ne\": \"\"}"; commands.add(DlrNeInjectionCommand);
+        String DlrNeInjectionCommand2 = "{\"$ne\": -1}";commands.add(DlrNeInjectionCommand2);
+        String AtNeInjectionCommand2 = "{\"&ne\": -1}"; commands.add(AtNeInjectionCommand2);
+        String AtWhereInjectionCommand = "{\"&where\":  \"return true\"}"; commands.add(AtWhereInjectionCommand);
+        String DlrWhereInjectionCommand = "{\"$where\":  \"return true\"}"; commands.add(DlrWhereInjectionCommand);
+        //Timing NoSql Injection
+        String DlrWhereSleepInjectionCommand = "{\"$where\":  \"sleep(100)\"}"; commands.add(DlrWhereSleepInjectionCommand);
+        String AtWhereSleepInjectionCommand = "{\"&where\":  \"sleep(100)\"}"; commands.add(AtWhereSleepInjectionCommand);
+        String sleepInjectionCommand = ";sleep(100);"; commands.add(sleepInjectionCommand);
 
-        return false;
+        return commands.contains(password);
     }
 
 }
