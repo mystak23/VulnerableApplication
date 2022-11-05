@@ -25,7 +25,7 @@ public class LoginController {
            if (UserDatabase.validateUser(user.getName(), user.getPassword())) {
                return "login_success";
            } else {
-               if (UserDatabase.isInjected()) {
+               if (UserDatabase.isInjected(user.getName(), user.getPassword())) {
                    return "login_injected";
                } else {
                    return "login_unsuccess";
